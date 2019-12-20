@@ -1,0 +1,41 @@
+@import '../../css/variables'
+    
+.aside
+    display: flex
+    flex-direction: column
+    padding: 100px 25px
+    box-sizing: border-box
+    &__header
+        color: $secondary-color
+        font-size: 28px
+        margin: 0
+
+.form
+    margin-top: 35px
+    display: flex
+    flex-direction: column
+    width: 100%
+    &__field
+        width: 100%
+        padding: 10px
+        box-sizing: border-box
+        background-color: #fbfbfb
+        border: 1px solid #fff
+        border-radius: 8px
+        font-family: $fiter-font-family
+        outline: none
+        transition: 0.4s
+        font-size: 18px
+        color: #43679D
+        margin-bottom: 20px
+        &.textarea
+            resize: none
+        &:hover
+            border-color: #1890ff
+        &::placeholder
+            color: #aaa
+        &:focus
+            background: #fff
+            border-color: #1890ff
+            &::placeholder
+                color: transparent
