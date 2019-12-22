@@ -9,7 +9,7 @@
     flex-direction: column
     padding: 25px
     box-sizing: border-box
-    &__header
+    &__title
         color: $secondary-color
         font-size: 28px
         margin: 0
@@ -77,11 +77,9 @@
 
 .MuiInput-underline
     &:before
-        border-bottom: 1px solid $primary-color
-        bottom: -4px
+        display: none
     & > input
-        padding-bottom: 2px
-        padding-top: 0
+        padding: 0
         color: $primary-color
 
 label + .MuiInput-formControl

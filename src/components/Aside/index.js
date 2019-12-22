@@ -1,17 +1,9 @@
-import React from 'react'
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
+import React, { useState, useCallback } from 'react'
 import { makeStyles } from "@material-ui/core/styles"
-import InputLabel from "@material-ui/core/InputLabel"
-import MenuItem from "@material-ui/core/MenuItem"
-import FormControl from "@material-ui/core/FormControl"
-import Select from "@material-ui/core/Select"
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
 
-
+import InputSelect from '../Select'
+import DateRangePicker from '../DateRangePicker'
+import { CATEGORIES } from '../../constants'
 import './Aside.sass'
 
 
@@ -30,82 +22,85 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
 const Aside = () => {
 
-    const [category, setCategory] = React.useState("");
-    const [selectedStartDate, setSelectedStartDate] = React.useState(new Date('2014-08-18T21:11:54'));
-    const [selectedEndDate, setSelectedEndDate] = React.useState(new Date('2014-08-18T21:11:54'));
+    const [inputsValues, setInputsValues] = useState({ filename: '', description: '', category: '' })
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date('2014-08-18T21:11:54'));
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date('2014-08-18T21:11:54'));
 
-    const handleStartDateChange = date => {
+    const handleStartDateChange = useCallback(date => {
         setSelectedStartDate(date);
-    };
+        startDate.value = date
+        endDate.minDate = date
+    }, []);
 
-    const handleEndDateChange = date => {
-        setSelectedEndDate(date);
-    };
+    const handleEndDateChange = useCallback(date => {
+        setSelectedEndDate(date)
+        endDate.value = date
+    }, []);
 
-    const handleCategoryChange = event => {
-        setCategory(event.target.value);
-    };
+    const handleInputsChange = useCallback(e => {
+        const target = { [e.target.name]: e.target.value }
+        setInputsValues({ ...inputsValues, ...target })
+    }, [])
 
     const classes = useStyles();
 
+    const startDate = {
+        value: selectedStartDate,
+        handleChange: handleStartDateChange,
+        id: "date-picker-start",
+        minDate: new Date(2000, 12, 31)
+    }
+
+    const endDate = {
+        value: selectedEndDate,
+        handleChange: handleEndDateChange,
+        id: "date-picker-end",
+        minDate: selectedStartDate,
+        minDateMessage: "End date can not be before start date"
+    }
+
+
     return (
         <aside className="aside" >
-            <h3 className="aside__header">Filter by</h3>
+            <h3 className="aside__title">Filter by</h3>
             <form action="" className="form">
-                <input type="text" className="form__field" placeholder="[filename].[ext]" />
+                <input
+                    type="text"
+                    name="filename"
+                    className="form__field"
+                    placeholder="[filename].[ext]"
+                    value={inputsValues.filename}
+                    onChange={handleInputsChange}
+                />
                 <textarea
                     className="form__field textarea"
-                    name=""
+                    name="description"
                     id=""
                     cols="30"
                     rows="10"
                     placeholder="Description..."
+                    value={inputsValues.description}
+                    onChange={handleInputsChange}
                 />
 
-                <FormControl className={classes.formControl} variant="outlined">
-                    <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={category}
-                        onChange={handleCategoryChange}
-                    >
-                        <MenuItem className={classes.item} value={"frontend"}>Frontend</MenuItem>
-                        <MenuItem className={classes.item} value={"machine-learning"}>Machine Learning</MenuItem>
-                        <MenuItem className={classes.item} value={"dependency-inversion"}>Dependency Inversion</MenuItem>
-                        <MenuItem className={classes.item} value={"backend"}>Backend</MenuItem>
-                        <MenuItem className={classes.item} value={"computer-graphics"}>Computer Graphics</MenuItem>
-                    </Select>
-                </FormControl>
+                <InputSelect
+                    name="category"
+                    classes={classes}
+                    inputLabel={"Category"}
+                    categories={CATEGORIES}
+                    handleChange={handleInputsChange}
+                    value={inputsValues.category}
+                    labelId={"filter-label"}
+                    selectId={"filter-select"}
+                />
 
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker className={classes.formControl}
-                        autoOk
-                        variant="inline"
-                        animateYearScrolling={true}
-                        format="dd / MM / yyyy"
-                        id="date-picker-start"
-                        value={selectedStartDate}
-                        onChange={handleStartDateChange}
-                    />
-                </MuiPickersUtilsProvider>
-
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker className={classes.formControl}
-                        autoOk
-                        variant="inline"
-                        minDate={selectedStartDate}
-                        animateYearScrolling={true}
-                        format="dd / MM / yyyy"
-                        id="date-picker-end"
-                        value={selectedEndDate}
-                        onChange={handleEndDateChange}
-                        minDateMessage={"End date can not be before start date"}
-                    />
-                </MuiPickersUtilsProvider>
+                <DateRangePicker
+                    startDate={startDate}
+                    endDate={endDate}
+                    classes={classes}
+                />
 
                 <button className="btn-accent">Filter</button>
             </form>
