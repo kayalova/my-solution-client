@@ -102,7 +102,7 @@ const Aside = () => {
                     classes={classes}
                 />
 
-                <button className="btn-accent">Filter</button>
+                <button className="btn btn-filter">Filter</button>
             </form>
         </aside >
     )

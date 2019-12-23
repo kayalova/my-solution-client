@@ -25,7 +25,7 @@
         box-sizing: border-box
         background-color: #fbfbfb
         border: 1px solid #fff
-        border-radius: 8px
+        border-radius: $border-radius
         font-family: $fiter-font-family
         outline: none
         transition: 0.4s
@@ -104,20 +104,21 @@ label + .MuiInput-formControl
 .MuiButtonBase-root.MuiIconButton-root
     padding: 8px
 
-.btn-accent
-    max-width: 100px
-    width: 100%
-    background: $secondary-color
-    color: #555
-    line-height: 35px
-    font-size: 19px
-    font-family: $fiter-font-family
+.btn
     border: none
     outline: none
     cursor: pointer
     box-sizing: border-box
-    border-radius: 8px
-    align-self: center
+    border-radius: $border-radius
+    font-size: 19px
     transition: .4s
-    &:hover
-        color: $primary-color
+    &-filter
+        line-height: 35px       
+        max-width: 100px
+        width: 100%
+        background: $secondary-color
+        color: #555
+        font-family: $fiter-font-family
+        align-self: center
+        &:hover
+            color: $primary-color
