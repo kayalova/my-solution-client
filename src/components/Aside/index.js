@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react'
+import React, { useCallback, useReducer } from 'react'
 import { makeStyles } from "@material-ui/core/styles"
 
+import fitlerReducer from '../../reducers/filters.js'
 import InputSelect from '../Select'
 import DateRangePicker from '../DateRangePicker'
 import { CATEGORIES } from '../../constants'
@@ -24,54 +25,48 @@ const useStyles = makeStyles(theme => ({
 
 const Aside = () => {
 
-    const [inputsValues, setInputsValues] = useState({ filename: '', description: '', category: '' })
-    const [selectedStartDate, setSelectedStartDate] = useState(new Date('2014-08-18T21:11:54'));
-    const [selectedEndDate, setSelectedEndDate] = useState(new Date('2014-08-18T21:11:54'));
+    const [formValues, dispatch] = useReducer(fitlerReducer,
+        {
+            filename: '',
+            category: '',
+            description: ''
+        })
 
-    const handleStartDateChange = useCallback(date => {
-        setSelectedStartDate(date);
-        startDate.value = date
-        endDate.minDate = date
-    }, []);
 
-    const handleEndDateChange = useCallback(date => {
-        setSelectedEndDate(date)
-        endDate.value = date
-    }, []);
+    const { filename, category, description } = formValues
 
     const handleInputsChange = useCallback(e => {
         const target = { [e.target.name]: e.target.value }
-        setInputsValues({ ...inputsValues, ...target })
-    }, [])
+        dispatch({ type: 'CHANGE_INPUTS', payload: target })
+    }, [filename, category, description])
 
-    const classes = useStyles();
 
-    const startDate = {
-        value: selectedStartDate,
-        handleChange: handleStartDateChange,
-        id: "date-picker-start",
-        minDate: new Date(2000, 12, 31)
-    }
+    const handleSubmit = useCallback(e => {
+        e.preventDefault()
 
-    const endDate = {
-        value: selectedEndDate,
-        handleChange: handleEndDateChange,
-        id: "date-picker-end",
-        minDate: selectedStartDate,
-        minDateMessage: "End date can not be before start date"
-    }
+        // const selectors = { ...inputsValues, selectedStartDate, selectedEndDate }
+        // console.log(selectors)
+        // fetch('/snippets', {
+        //     method: 'POST',
+        //     body: JSON.stringify(selectors)
+        // }).then(response => {
+        //     console.log(response)
+        // }).catch(err => console.log(err))
+    })
+
+    const classes = useStyles()
 
 
     return (
         <aside className="aside" >
             <h3 className="aside__title">Filter by</h3>
-            <form action="" className="form">
+            <form action="" className="form" onSubmit={handleSubmit}>
                 <input
                     type="text"
                     name="filename"
                     className="form__field"
                     placeholder="[filename].[ext]"
-                    value={inputsValues.filename}
+                    value={filename}
                     onChange={handleInputsChange}
                 />
                 <textarea
@@ -81,7 +76,7 @@ const Aside = () => {
                     cols="30"
                     rows="10"
                     placeholder="Description..."
-                    value={inputsValues.description}
+                    value={description}
                     onChange={handleInputsChange}
                 />
 
@@ -91,14 +86,12 @@ const Aside = () => {
                     inputLabel={"Category"}
                     categories={CATEGORIES}
                     handleChange={handleInputsChange}
-                    value={inputsValues.category}
+                    value={category}
                     labelId={"filter-label"}
                     selectId={"filter-select"}
                 />
 
                 <DateRangePicker
-                    startDate={startDate}
-                    endDate={endDate}
                     classes={classes}
                 />
 

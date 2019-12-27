@@ -3,18 +3,20 @@ import React from 'react'
 import SnippetTable from './SnippetTable'
 import './SnippetPreview.sass'
 
-const SnippetPreview = () => {
+const SnippetPreview = ({ snippet }) => {
+
+    const { filename, category, date, description } = snippet
     return (
         <React.Fragment>
             <section className="snippet">
                 <div className="snippet__code">
-                    <SnippetTable />
+                    <SnippetTable description={description} />
                 </div>
-                <div className="snippet__description">
-                    <div className="description-wrapper">
-                        <h4 className="snippet__text">task1.py</h4>
-                        <p className="snippet__text">#backend</p>
-                        <p className="snippet__text">12.12.2019</p>
+                <div className="snippet__info">
+                    <div className="info-wrapper">
+                        <p className="snippet__text">{filename}</p>
+                        <p className="snippet__text">{'#' + category}</p>
+                        <p className="snippet__text">{date}</p>
                     </div>
                     <button className="btn btn-delete">Delete</button>
                 </div>

@@ -25,3 +25,5 @@ export const CATEGORIES = [
     }
 
 ]
+
+export const CHANGE_INPUTS = 'CHANGE_INPUTS'

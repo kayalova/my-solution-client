@@ -7,23 +7,6 @@ import TableRow from '@material-ui/core/TableRow';
 import TableContainer from '@material-ui/core/TableContainer';
 
 
-function createData(numberString, codeString) {
-    return { numberString, codeString };
-}
-
-const rows = [
-    createData('1', 'hello hello yoo'),
-    createData('2', 'import React from "react"'),
-    createData('3', 'import "bright future"'),
-    createData('4', 'import dog from "future"'),
-    createData('5', 'import fantasy from "anywhere"'),
-    createData('6', ":)"),
-    createData('7', ":)"),
-    createData('8', ":)"),
-    createData('9', ":)"),
-    createData('10', ":)"),
-];
-
 const useStyles = makeStyles({
     table: {
         backgroundColor: '#fbfbfb',
@@ -48,24 +31,26 @@ const useStyles = makeStyles({
 
 
 
-const SnippetTable = () => {
+const SnippetTable = ({ description }) => {
     const classes = useStyles();
+
+    const rows = description.split('\n')
 
     return (
         <TableContainer >
             <Table className={classes.table} aria-label="customized table">
                 <TableBody>
-                    {rows.map(row => (
-                        <TableRow key={row.numberString} className={classes.row}>
-                            <TableCell component="th" align="right" scope="row" className={[classes.cols, classes.th]}>
-                                {row.numberString}
+                    {rows.map((row, index) => (
+                        <TableRow key={index} className={classes.row}>
+                            <TableCell align="right" className={`${classes.cols} ${classes.th}`}>
+                                {index + 1}
                             </TableCell>
-                            <TableCell align="left" className={classes.cols}>{row.codeString}</TableCell>
+                            <TableCell align="left" className={classes.cols}>{row}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
-        </TableContainer>
+        </TableContainer >
     )
 }
 
