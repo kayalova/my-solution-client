@@ -8,7 +8,7 @@ import Select from "@material-ui/core/Select"
 const InputSelect = props => {
 
     const {
-        handleChange, value, classes,
+        handleChange, value, classes, name,
         inputLabel, categories, labelId, selectId
     } = props
 
@@ -20,6 +20,7 @@ const InputSelect = props => {
         <FormControl className={classes.formControl} variant="outlined">
             <InputLabel id={labelId}>{inputLabel}</InputLabel>
             <Select
+                name={name}
                 labelId={labelId}
                 id={selectId}
                 value={value}
