@@ -2,12 +2,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import Header from './Header'
-import Aside from './Aside'
+import Aside from './Aside/'
 import SnippetPreview from './SnippetPreview'
 import './App.sass'
 
 const App = () => {
-
     const snippets = useSelector(state => state.snippets)
     const snippetsList = snippets.map((snippet, index) => <SnippetPreview snippet={snippet} key={index} />)
 

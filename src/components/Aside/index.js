@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles"
 
 import InputSelect from '../Select'
 import DateRangePicker from '../DateRangePicker'
-import { CATEGORIES } from '../../constants'
+import { CATEGORIES, CHANGE_INPUTS } from '../../constants'
 import './Aside.sass'
 
 
@@ -32,21 +32,26 @@ const Aside = () => {
 
     const handleInputsChange = useCallback(e => {
         const target = { [e.target.name]: e.target.value }
-        dispatch({ type: 'CHANGE_INPUTS', payload: target })
+        dispatch({ type: CHANGE_INPUTS, payload: target })
     }, [filename, category, description, dispatch])
 
 
     const handleSubmit = useCallback(e => {
         e.preventDefault()
 
+
         // const selectors = { ...inputsValues, selectedStartDate, selectedEndDate }
         // console.log(selectors)
-        // fetch('/snippets', {
-        //     method: 'POST',
-        //     body: JSON.stringify(selectors)
-        // }).then(response => {
-        //     console.log(response)
-        // }).catch(err => console.log(err))
+        fetch('http://localhost:3030/api/snippets', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify([1, 2, 3])
+        }).then(response => {
+            console.log(response.json())
+        }).catch(err => console.log(err))
     }, [])
 
     const classes = useStyles()
