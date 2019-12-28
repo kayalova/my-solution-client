@@ -17,7 +17,6 @@ const useStyles = makeStyles({
     cols: {
         borderBottom: 0,
         padding: '2px 0',
-        color: '#666',
         fontFamily: 'monospace',
         fontSize: 13,
         color: '#43679D'

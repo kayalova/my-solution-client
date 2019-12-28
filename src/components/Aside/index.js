@@ -1,7 +1,7 @@
-import React, { useCallback, useReducer } from 'react'
+import React, { useCallback } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from "@material-ui/core/styles"
 
-import fitlerReducer from '../../reducers/filters.js'
 import InputSelect from '../Select'
 import DateRangePicker from '../DateRangePicker'
 import { CATEGORIES } from '../../constants'
@@ -25,20 +25,15 @@ const useStyles = makeStyles(theme => ({
 
 const Aside = () => {
 
-    const [formValues, dispatch] = useReducer(fitlerReducer,
-        {
-            filename: '',
-            category: '',
-            description: ''
-        })
+    const formFilterValues = useSelector(state => state.filter)
+    const { filename, category, description } = formFilterValues
 
-
-    const { filename, category, description } = formValues
+    const dispatch = useDispatch()
 
     const handleInputsChange = useCallback(e => {
         const target = { [e.target.name]: e.target.value }
         dispatch({ type: 'CHANGE_INPUTS', payload: target })
-    }, [filename, category, description])
+    }, [filename, category, description, dispatch])
 
 
     const handleSubmit = useCallback(e => {
@@ -52,10 +47,9 @@ const Aside = () => {
         // }).then(response => {
         //     console.log(response)
         // }).catch(err => console.log(err))
-    })
+    }, [])
 
     const classes = useStyles()
-
 
     return (
         <aside className="aside" >

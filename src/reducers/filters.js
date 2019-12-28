@@ -1,3 +1,5 @@
+import { CHANGE_INPUTS } from '../constants'
+
 const state = {
     filename: '',
     category: '',
@@ -11,7 +13,7 @@ export default (filterState = state, action) => {
     const { type, payload } = action
 
     switch (type) {
-        case 'CHANGE_INPUTS':
+        case CHANGE_INPUTS:
             return { ...filterState, ...payload }
         default:
             return filterState

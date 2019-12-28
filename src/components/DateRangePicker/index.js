@@ -1,4 +1,5 @@
-import React, { useReducer, useCallback } from 'react'
+import React, { useCallback } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 import {
@@ -6,17 +7,14 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers'
 
-import fitlerReducer from '../../reducers/filters.js'
+import { CHANGE_INPUTS } from '../../constants'
 
 
 
 const DateRangePicker = ({ classes }) => {
 
-    const [dateValues, dispatch] = useReducer(fitlerReducer,
-        {
-            startDate: '2019.08.18',
-            endDate: '2019.08.18',
-        })
+    const dateValues = useSelector(state => state.filter)
+    const dispatch = useDispatch()
 
     const { startDate, endDate } = dateValues
 
@@ -38,14 +36,14 @@ const DateRangePicker = ({ classes }) => {
     const handleStartChange = useCallback((date, value) => {
         const target = { [startDate]: value }
         end.minDate = value
-        dispatch({ type: 'CHANGE_INPUTS', payload: target })
-    }, [startDate, end.minDate])
+        dispatch({ type: CHANGE_INPUTS, payload: target })
+    }, [startDate, end.minDate, dispatch])
 
 
     const handleEndChange = useCallback((date, value) => {
         const target = { [endDate]: value }
         dispatch({ type: 'CHANGE_INPUTS', payload: target })
-    }, [endDate])
+    }, [endDate, dispatch])
 
 
     start = { ...start, handleStartChange: handleStartChange }
