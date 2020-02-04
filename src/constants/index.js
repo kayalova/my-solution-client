@@ -1,29 +1,28 @@
 export const CATEGORIES = [
     {
         label: 'Frontend',
-        value: 'frontend'
+        value: `5e398b2fe9fd7501f8173640`
     },
     {
         label: 'Backend',
-        value: 'backend'
+        value: `5e398b2fe9fd7501f8173641`
     },
     {
         label: 'Machine Learning',
-        value: 'machine-learning'
+        value: `5e398b2fe9fd7501f8173642`
     },
     {
         label: 'Dependency Inversion',
-        value: 'dependency-inversion'
+        value: `5e398b2fe9fd7501f8173643`
     },
     {
         label: 'Computer Graphics',
-        value: 'computer-graphics'
+        value: `5e398b2fe9fd7501f8173644`
     },
     {
         label: 'Algorithms',
-        value: 'algorithms'
+        value: `5e398b2fe9fd7501f8173645`
     }
-
 ]
 
-export const CHANGE_INPUTS = 'CHANGE_INPUTS'
+export const CHANGE_FILTERS = 'CHANGE_FILTERS'

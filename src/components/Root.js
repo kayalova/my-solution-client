@@ -2,7 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 
 import store from '../store'
-import App from './App.js'
+import App from './App'
 
 const Root = () => {
     return (

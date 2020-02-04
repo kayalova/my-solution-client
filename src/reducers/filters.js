@@ -1,10 +1,10 @@
-import { CHANGE_INPUTS } from '../constants'
+import { CHANGE_FILTERS } from '../constants'
 
 const state = {
     filename: '',
     category: '',
-    startDate: '2014-08-18',
-    endDate: '2014-08-18',
+    startDate: 0,
+    endDate: new Date().getTime(),
     description: ''
 }
 
@@ -13,7 +13,7 @@ export default (filterState = state, action) => {
     const { type, payload } = action
 
     switch (type) {
-        case CHANGE_INPUTS:
+        case CHANGE_FILTERS:
             return { ...filterState, ...payload }
         default:
             return filterState

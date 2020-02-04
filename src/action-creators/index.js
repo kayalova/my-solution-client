@@ -1,8 +1,8 @@
-import { CHANGE_INPUTS } from '../constants'
+import { CHANGE_FILTERS } from '../constants'
 
-export const filter = (formField) => {
+export const filter = formField => {
     return {
-        type: CHANGE_INPUTS,
+        type: CHANGE_FILTERS,
         payload: formField
     }
 }
