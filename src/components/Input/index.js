@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const InputText = props => {
-    const { label, multiline, handleChange, name, value, variant } = props
+    const { label, handleChange, name, value, variant } = props
     const styles = useStyles(props)
 
     return (

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 import FormControl from '@material-ui/core/FormControl'
 
 import InputText from '../Input'
@@ -10,7 +10,9 @@ import { BTN_CREATE_STYLES, DESCRIPTION_STYLES } from '../../constants/styles'
 import './CreateSnippet.sass'
 
 const CreateSnippet = () => {
-    const [snippetFields, changeSnippetFields] = useState({
+    const [isBtnDisabled, setBtnDisabled] = useState(true)
+
+    const [snippetFields, setSnippetFields] = useState({
         filename: '',
         description: '',
         category: '',
@@ -22,13 +24,31 @@ const CreateSnippet = () => {
     const handleChange = useCallback(
         e => {
             const target = { [e.target.name]: e.target.value }
-            changeSnippetFields({
+            setSnippetFields({
                 ...snippetFields,
                 ...target
             })
+            const areEmptyFields = Boolean(
+                getEmptyFields({ ...snippetFields, ...target }).length
+            )
+            setBtnDisabled(areEmptyFields)
         },
-        [filename, description, category]
+        [filename, description, category, code]
     )
+
+    const getEmptyFields = form => {
+        const fields = Object.keys(form)
+
+        const invalidInputs = fields.reduce((invalid, field) => {
+            if (!form[field]?.trim()) invalid.push(field)
+
+            return invalid
+        }, [])
+
+        return invalidInputs
+    }
+
+    const isEmpty = str => Boolean(str?.trim().length)
 
     return (
         <section className='section'>
@@ -69,7 +89,7 @@ const CreateSnippet = () => {
                     variant={'contained'}
                     size={'medium'}
                     style={BTN_CREATE_STYLES}
-                    isDisabled={true}
+                    isDisabled={isBtnDisabled}
                 />
             </FormControl>
         </section>
