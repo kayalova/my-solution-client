@@ -1,9 +1,13 @@
 import React from 'react'
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Header from '../Header'
 import Aside from '../Aside/'
 import SnippetPreview from '../SnippetPreview'
+import SearchSnippets from '../SearchSnippets'
+import AddButton from '../AddButton'
+import CreateSnippet from '../CreateSnippet'
 import './App.sass'
 
 const App = () => {
@@ -13,23 +17,35 @@ const App = () => {
     ))
 
     return (
-        <div className='page'>
-            <Header />
-            <div className='wrapper'>
-                <main className='main'>
-                    {/* <Route1> */}
-                    <Aside />
-                    <article className='article'>{snippetsList}</article>
-                    {/* /<Route1> */}
-                    {/* <Route2>
-                        <FullSnippet />
-                    </Route2> */}
-                    {/* <Route3>
-                        <CreateSnippet />
-                    </Route3> */}
-                </main>
+        <BrowserRouter>
+            <div className='page'>
+                <Header />
+                <div className='wrapper'>
+                    <main className='main'>
+                        <Switch>
+                            <Route
+                                exact
+                                path='/'
+                                render={props => (
+                                    <SearchSnippets>
+                                        <Aside />
+                                        <article className='article'>
+                                            {snippetsList}
+                                        </article>
+                                        <Link to={'/create'}>
+                                            <AddButton />
+                                        </Link>
+                                    </SearchSnippets>
+                                )}
+                            />
+                            <Route path='/create' component={CreateSnippet} />
+                            {/* <CreateSnippet /> */}
+                            {/* <FullSnippet /> */}
+                        </Switch>
+                    </main>
+                </div>
             </div>
-        </div>
+        </BrowserRouter>
     )
 }
 

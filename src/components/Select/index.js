@@ -3,18 +3,34 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
+import { makeStyles } from '@material-ui/core/styles'
 
 const InputSelect = props => {
     const {
         handleChange,
         value,
-        classes,
         name,
         inputLabel,
         categories,
         labelId,
         selectId
     } = props
+
+    const useStyles = makeStyles(theme => ({
+        formControl: {
+            backgroundColor: '#fbfbfb',
+            borderRadius: 4,
+            border: '1px solid #fff',
+            transition: '.4s',
+            marginBottom: 20,
+            maxWidth: 200
+        },
+        item: {
+            color: '#1890ff'
+        }
+    }))
+
+    const classes = useStyles()
 
     const options = categories.map(({ value, label }) => (
         <MenuItem className={classes.item} value={value} key={value}>

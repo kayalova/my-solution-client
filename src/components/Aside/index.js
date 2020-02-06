@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
-import InputSelect from './Select'
+import InputSelect from '../Select'
 import DateRangePicker from './DateRangePicker'
 import { CATEGORIES, CHANGE_FILTERS } from '../../constants'
 import './Aside.sass'
@@ -79,7 +79,6 @@ const Aside = () => {
 
                 <InputSelect
                     name='category'
-                    classes={classes}
                     inputLabel={'Category'}
                     categories={CATEGORIES}
                     handleChange={handleInputsChange}

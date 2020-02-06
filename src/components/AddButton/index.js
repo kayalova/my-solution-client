@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const CreateButton = ({ width }) => {
+const AddButton = ({ width }) => {
     const classes = useStyles()
 
     const isXs = width === 'xs'
@@ -35,4 +35,4 @@ const CreateButton = ({ width }) => {
     )
 }
 
-export default withWidth()(CreateButton)
+export default withWidth()(AddButton)
