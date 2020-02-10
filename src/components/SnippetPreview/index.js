@@ -1,26 +1,67 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import SnippetTable from './SnippetTable'
+import Button from '../Button'
+import { getFullDate } from '../../helpers'
+import { getSnippet, deleteSnippet } from '../../server/Repository'
+import { BTN_DELETE_STYLES } from '../../constants/styles'
+import { removeSnippet } from '../../action-creators'
 import './SnippetPreview.sass'
 
 const SnippetPreview = ({ snippet }) => {
-    const { filename, category, date, description } = snippet
+    const {
+        _id,
+        userFilename: filename,
+        category,
+        createdAt,
+        codePreview
+    } = snippet
+
+    const history = useHistory()
+    const dispatch = useDispatch()
+
+    const date = getFullDate(createdAt)
+
+    const submitHandler = e => {
+        e.preventDefault()
+        deleteSnippet(_id)
+            .then(() => dispatch(removeSnippet(_id)))
+            .catch(err => console.log(err))
+    }
+
+    const clickHandler = async e => {
+        e.preventDefault()
+        const response = await getSnippet(_id)
+        history.push(`/snippets/${_id}`, response)
+    }
+
     return (
-        <React.Fragment>
-            <section className='snippet'>
+        <section className='snippet'>
+            <form onClick={clickHandler}>
                 <div className='snippet__code'>
-                    <SnippetTable description={description} />
+                    <SnippetTable codePreview={codePreview} />
                 </div>
-                <div className='snippet__info'>
-                    <div className='info-wrapper'>
-                        <p className='snippet__text'>{filename}</p>
-                        <p className='snippet__text'>{category}</p>
-                        <p className='snippet__text'>{date}</p>
-                    </div>
-                    <button className='btn btn-delete'>Delete</button>
+            </form>
+            <div className='snippet__info'>
+                <div className='info-wrapper'>
+                    <p className='snippet__text'>{filename}</p>
+                    <p className='snippet__text'>{category.title}</p>
+                    <p className='snippet__text'>{date}</p>
                 </div>
-            </section>
-        </React.Fragment>
+                <form onSubmit={submitHandler}>
+                    <Button
+                        style={BTN_DELETE_STYLES}
+                        type='submit'
+                        id='btn-delete'
+                        text='Delete'
+                        variant='contained'
+                        size='medium'
+                    />
+                </form>
+            </div>
+        </section>
     )
 }
 

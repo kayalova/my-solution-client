@@ -2,7 +2,6 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import withWidth from '@material-ui/core/withWidth'
 import Fab from '@material-ui/core/Fab'
-import AddIcon from '@material-ui/icons/Add'
 
 const useStyles = makeStyles(theme => ({
     fab: {
@@ -13,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const AddButton = ({ width }) => {
+const FabButton = ({ width, icon }) => {
     const classes = useStyles()
 
     const isXs = width === 'xs'
@@ -30,9 +29,9 @@ const AddButton = ({ width }) => {
             className={classes.fab}
             {...props}
         >
-            <AddIcon />
+            {icon}
         </Fab>
     )
 }
 
-export default withWidth()(AddButton)
+export default withWidth()(FabButton)

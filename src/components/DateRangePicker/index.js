@@ -7,7 +7,7 @@ import {
     KeyboardDatePicker
 } from '@material-ui/pickers'
 
-import { CHANGE_FILTERS } from '../../../constants'
+import { updateFilters } from '../../action-creators'
 import './DateRangePicker.sass'
 
 const DateRangePicker = ({ classes }) => {
@@ -36,7 +36,7 @@ const DateRangePicker = ({ classes }) => {
         date => {
             const target = { startDate: date.getTime() }
             end.minDate = date.getTime()
-            dispatch({ type: CHANGE_FILTERS, payload: target })
+            dispatch(updateFilters(target))
         },
         [startDate, end.minDate, dispatch]
     )
@@ -44,7 +44,7 @@ const DateRangePicker = ({ classes }) => {
     const handleEndChange = useCallback(
         date => {
             const target = { endDate: date.getTime() }
-            dispatch({ type: CHANGE_FILTERS, payload: target })
+            dispatch(updateFilters(target))
         },
         [endDate, dispatch]
     )

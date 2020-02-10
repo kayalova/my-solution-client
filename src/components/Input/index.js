@@ -13,7 +13,8 @@ const useStyles = makeStyles(theme => ({
             transform: 'translate(12px, 9px) scale(0.66)'
         },
         '& .MuiInputLabel-formControl': {
-            top: '-8px'
+            top: '-8px',
+            fontSize: '13px'
         },
         '&.MuiTextField-root': {
             padding: 0,
@@ -35,10 +36,10 @@ const useStyles = makeStyles(theme => ({
             borderRadius: '4px',
             '& > input': {
                 color: '#43679D'
-            },
-            '&:focus': {
-                backgroundColor: 'red'
             }
+            // '&:focus': {
+            //     backgroundColor: 'red'
+            // }
         }
     }
 }))
@@ -49,7 +50,7 @@ const InputText = props => {
 
     return (
         <TextField
-            variant={variant}
+            variant={variant || 'filled'}
             className={styles.root}
             name={name}
             label={label}

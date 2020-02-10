@@ -1,21 +1,17 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
+import AddIcon from '@material-ui/icons/Add'
 import Header from '../Header'
 import Aside from '../Aside/'
-import SnippetPreview from '../SnippetPreview'
-import SearchSnippets from '../SearchSnippets'
-import AddButton from '../AddButton'
+import SnippetList from '../SnippetPreviewList'
+import SearchContainer from '../SearchContainer'
+import FabButton from '../FAB'
 import CreateSnippet from '../CreateSnippet'
+import FullSnippet from '../FullSnippet'
 import './App.sass'
 
 const App = () => {
-    const snippets = useSelector(state => state.snippets)
-    const snippetsList = snippets.map((snippet, index) => (
-        <SnippetPreview snippet={snippet} key={index} />
-    ))
-
     return (
         <BrowserRouter>
             <div className='page'>
@@ -25,22 +21,22 @@ const App = () => {
                         <Switch>
                             <Route
                                 exact
-                                path='/'
+                                path='/snippets'
                                 render={props => (
-                                    <SearchSnippets>
-                                        <Aside />
-                                        <article className='article'>
-                                            {snippetsList}
-                                        </article>
+                                    <SearchContainer>
+                                        <Aside {...props} />
+                                        <SnippetList {...props} />
                                         <Link to={'/create'}>
-                                            <AddButton />
+                                            <FabButton icon={<AddIcon />} />
                                         </Link>
-                                    </SearchSnippets>
+                                    </SearchContainer>
                                 )}
                             />
                             <Route path='/create' component={CreateSnippet} />
-                            {/* <CreateSnippet /> */}
-                            {/* <FullSnippet /> */}
+                            <Route
+                                path='/snippets/:id'
+                                component={FullSnippet}
+                            />
                         </Switch>
                     </main>
                 </div>

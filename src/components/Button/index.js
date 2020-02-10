@@ -5,16 +5,23 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
     btn: {
         maxWidth: props => props?.style?.maxWidth || 100,
-        color: props => props?.style?.color || '#fff',
-        backgroundColor: props => props?.style?.bgColor || 'blue',
+        marginTop: props => props?.style?.marginTop || 20,
         alignSelf: props => props?.style?.alignSelf,
         padding: props => props?.style?.padding,
+        zIndex: props => props?.style?.zIndex,
+        position: props => props?.style?.position || 'static',
+        top: props => props?.style?.top,
+        left: props => props?.style?.left,
+        color: props => props?.style?.color || '#fff',
+        backgroundColor: props => props?.style?.bgColor || 'blue',
+        borderRadius: props => props?.style?.brad || 4,
         '&:hover': {
             color: props => props?.style?.hover?.color,
             backgroundColor: props => props?.style?.hover?.bgColor
         },
-        transition: props => props?.style?.transition,
-        marginTop: 20,
+        transition: props => props?.style?.transition || '.5s',
+        fontFamily: props => props?.style?.fontFamily,
+        fontSize: props => props?.style?.fontSize,
         textTransform: 'none',
         '&.Mui-disabled': {
             backgroundColor: 'rgba(256, 256, 256, .3)',
@@ -26,15 +33,17 @@ const useStyles = makeStyles(theme => ({
 const MyButton = props => {
     const classes = useStyles(props)
 
-    const { text, variant, isDisabled, size } = props
+    const { text, id, variant, size, type, isDisabled, handleClick } = props
     return (
         <Button
-            fullWidth={false}
+            type={type}
+            id={id}
             variant={variant}
             className={classes.btn}
             size={size}
             disableElevation
             disabled={isDisabled}
+            onClick={handleClick}
         >
             {text}
         </Button>

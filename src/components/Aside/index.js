@@ -1,10 +1,15 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
+import Button from '../Button'
+import Input from '../Input'
 import InputSelect from '../Select'
-import DateRangePicker from './DateRangePicker'
-import { CATEGORIES, CHANGE_FILTERS } from '../../constants'
+import DateRangePicker from '../DateRangePicker'
+import { BTN_FILTER_STYLES } from '../../constants/styles'
+import { updateFilters, loadSnippets } from '../../action-creators'
+import { getSnippets } from '../../server/Repository'
+import { makeGetRequest, makeCatsGetRequest } from '../../helpers'
 import './Aside.sass'
 
 const useStyles = makeStyles(theme => ({
@@ -23,13 +28,20 @@ const useStyles = makeStyles(theme => ({
 
 const Aside = () => {
     const dispatch = useDispatch()
-    const formFilterValues = useSelector(state => state.filter, shallowEqual)
+    const [categories, setCategories] = useState([])
+    const formFilterValues = useSelector(state => state.filter)
     const { filename, category, description } = formFilterValues
+
+    useEffect(() => {
+        makeCatsGetRequest()
+            .then(cats => setCategories(cats))
+            .catch(err => console.log(err))
+    }, [])
 
     const handleInputsChange = useCallback(
         e => {
             const target = { [e.target.name]: e.target.value }
-            dispatch({ type: CHANGE_FILTERS, payload: target })
+            dispatch(updateFilters(target))
         },
         [filename, category, description, dispatch]
     )
@@ -37,17 +49,8 @@ const Aside = () => {
     const handleSubmit = useCallback(
         e => {
             e.preventDefault()
-            const url = new URL('http://localhost:3002/api/snippets')
-            const params = formFilterValues
-
-            Object.keys(params).forEach(p => {
-                url.searchParams.append(p, params[p])
-            })
-
-            fetch(url)
-                .then(response => response.json())
-                .then(resp => console.log(resp))
-                .then(snippets => console.log(snippets))
+            getSnippets({ category, description, userFilename: filename })
+                .then(snippets => dispatch(loadSnippets(snippets)))
                 .catch(err => console.log(err))
         },
         [formFilterValues]
@@ -58,29 +61,26 @@ const Aside = () => {
     return (
         <aside className='aside'>
             <h3 className='aside__title'>Filter by</h3>
-            <form action='' className='form' onSubmit={handleSubmit}>
-                <input
+            <form className='form' onSubmit={handleSubmit}>
+                <Input
                     type='text'
                     name='filename'
-                    className='form__field'
-                    placeholder='[filename].[ext]'
+                    label='[filename].[ext]'
+                    handleChange={handleInputsChange}
                     value={filename}
-                    onChange={handleInputsChange}
                 />
-                <textarea
-                    className='form__field textarea'
+
+                <Input
                     name='description'
-                    id=''
-                    cols='30'
-                    rows='10'
-                    placeholder='Description...'
-                    onChange={handleInputsChange}
+                    label='Description...'
+                    handleChange={handleInputsChange}
+                    value={description}
                 />
 
                 <InputSelect
                     name='category'
                     inputLabel={'Category'}
-                    categories={CATEGORIES}
+                    items={categories}
                     handleChange={handleInputsChange}
                     value={category}
                     labelId={'filter-label'}
@@ -89,7 +89,13 @@ const Aside = () => {
 
                 <DateRangePicker classes={classes} />
 
-                <button className='btn btn-filter'>Filter</button>
+                <Button
+                    type='submit'
+                    text={'Filter'}
+                    style={BTN_FILTER_STYLES}
+                    size='medium'
+                />
+                {/* <button className='btn btn-filter'>Filter</button> */}
             </form>
         </aside>
     )

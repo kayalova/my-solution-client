@@ -1,8 +1,8 @@
 import React from 'react'
 import './SearchSnippet.sass'
 
-const SearchSnippets = ({ children }) => (
+const SearchContainer = ({ children }) => (
     <div className='search-container'>{children}</div>
 )
 
-export default SearchSnippets
+export default SearchContainer
