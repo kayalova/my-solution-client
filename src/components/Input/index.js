@@ -3,12 +3,18 @@ import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 
 import './Input.sass'
-
 const useStyles = makeStyles(theme => ({
     root: {
         marginBottom: 20,
-        maxWidth: props => props.style?.maxWidth || 200,
+        maxWidth: props => props?.style?.maxWidth || 200,
         borderRadius: '4px',
+        '& > div': {
+            border: '1px solid transparent',
+            transition: '0.5s',
+            '&:hover': {
+                border: '1px solid #1890ff'
+            }
+        },
         '& .MuiInputLabel-filled.MuiInputLabel-shrink': {
             transform: 'translate(12px, 9px) scale(0.66)'
         },
@@ -19,7 +25,7 @@ const useStyles = makeStyles(theme => ({
         '&.MuiTextField-root': {
             padding: 0,
             '& .MuiFilledInput-input': {
-                padding: '12px 10px 8px'
+                padding: '9px 10px 10px'
             },
             '& .MuiFilledInput-underline:before': {
                 borderBottom: 0
@@ -37,9 +43,6 @@ const useStyles = makeStyles(theme => ({
             '& > input': {
                 color: '#43679D'
             }
-            // '&:focus': {
-            //     backgroundColor: 'red'
-            // }
         }
     }
 }))
@@ -50,6 +53,7 @@ const InputText = props => {
 
     return (
         <TextField
+            type='text'
             variant={variant || 'filled'}
             className={styles.root}
             name={name}

@@ -7,14 +7,13 @@ import TextArea from '../TextArea'
 import Button from '../Button'
 import { getEmptyFields } from '../../helpers'
 import { BTN_CREATE_STYLES, DESCRIPTION_STYLES } from '../../constants/styles'
-import { createSnippet, getCategories } from '../../server/Repository'
+import { createSnippet, getCategories } from '../../server/serverApi'
 import './CreateSnippet.sass'
 
 const CreateSnippet = () => {
     const history = useHistory()
     const [isBtnDisabled, setBtnDisabled] = useState(true)
     const [categories, setCategories] = useState([])
-
     const [snippetFields, setSnippetFields] = useState({
         filename: '',
         description: '',

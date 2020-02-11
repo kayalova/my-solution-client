@@ -23,12 +23,7 @@ const FabButton = ({ width, icon }) => {
     }
 
     return (
-        <Fab
-            color='primary'
-            aria-label='add'
-            className={classes.fab}
-            {...props}
-        >
+        <Fab color='primary' className={classes.fab} {...props}>
             {icon}
         </Fab>
     )

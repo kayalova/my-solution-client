@@ -5,11 +5,6 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import { makeStyles } from '@material-ui/core/styles'
 
-// если этот класс строго для работы с категориями, то назови его как и везде
-// это просто инпут селект, вместо категорий могут быть другие варианты, в этом же смысл переиспользования
-// ну у нас с тобой разгонласия по компонентам, так что это вполне мог быть копмоеннт для работы с категориями
-// учитывая что тут етсь categories
-// categories -> items/options
 const InputSelect = props => {
     const {
         handleChange,

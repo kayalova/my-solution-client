@@ -1,40 +1,17 @@
-const state = [
-    {
-        filename: 'index.js',
-        category: 'frontend',
-        date: '12.12.2019',
-        description: ` import React from 'react';
-                        import Header from './components/Header'
-                        import Aside from './components/Aside'
-                        import SnippetPreview from './components/SnippetPreview'
-                        import './App.sass';
+import { GET_SNIPPET_LIST, DELETE_SNIPPET } from '../constants'
 
-                        const App = () => (
-                            <div className="page">
-                                <Aside />
-                            <div className="wrapper">`
-    },
-    {
-        filename: 'index.js',
-        category: 'frontend',
-        date: '12.12.2019',
-        description: ` import React from 'react';
-                        import Header from './components/Header'
-                        import Aside from './components/Aside'
-                        import SnippetPreview from './components/SnippetPreview'
-                        import './App.sass';
+const updateSnippetList = (snippets, id) =>
+    snippets.filter(snippet => snippet._id !== id)
 
-                        const App = () => (
-                            <div className="page">
-                                <Aside />
-                            <div className="wrapper">`
-    }
-]
+export default (snippets = [], action) => {
+    const { type, payload } = action
 
-export default (snippetsState = state, action) => {
-    switch (action.type) {
-        case 'FILTER_SNIPPETS':
-            return 'what to return? data from sserver'
-        default: return snippetsState
+    switch (type) {
+        case GET_SNIPPET_LIST:
+            return payload
+        case DELETE_SNIPPET:
+            return updateSnippetList(snippets, payload)
+        default:
+            return snippets
     }
 }

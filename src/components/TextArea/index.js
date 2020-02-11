@@ -1,35 +1,39 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
-import { fillNumberLine } from '../../helpers'
+import { fillNumberLine, getEntryCount } from '../../helpers'
 import './TextArea.sass'
 
-const TextArea = ({ handleChange, value, name, isDisabled, rows }) => {
+const TextArea = ({ handleChange, value, name, isDisabled }) => {
     const numLine = useRef(null)
     const code = useRef(null)
 
+    const rows = getEntryCount(value, /\n/g) + 1
+
     const [numberLine, setNumberLine] = useState(fillNumberLine(rows || 15))
+
+    const setMaxHeight = () => {
+        numLine.current.style.maxHeight = '400px'
+        code.current.style.maxHeight = '400px'
+    }
+
+    useEffect(() => {
+        if (!isDisabled) setMaxHeight()
+    }, [])
 
     const setNumberTextArea = count => {
         let value = fillNumberLine(count)
         setNumberLine(value)
 
-        scrollDownTaCode() // downTa?  Spain? ta- textarea; как до этого догадаться можно. scrollTo downTo downTa  Templar Assasin ))^))0ЖВ
-        scrollDownTaNumLine()
+        scrollDownCode()
+        scrollDownNumLine()
     }
 
-    const scrollDownTaNumLine = () => {
-        numLine.current.scrollTop = numLine.current.scrollHeight
-    }
+    const scrollDownNumLine = () =>
+        (numLine.current.scrollTop = numLine.current.scrollHeight)
 
-    const scrollDownTaCode = () => {
-        code.current.scrollTop = code.current.scrollHeight
-    }
+    const scrollDownCode = () =>
+        (code.current.scrollTop = code.current.scrollHeight)
 
-    // вахъ, все-таки через вычисления сделала? обсуждали же, на сервере по хорошему тоже как то поправиыть
-    // я помню. кароч хз. поправить на бэке нужно будет. и можно оттуда взять эту логику и применить тут. сама смотри.
-    // ну ты знаешь что я думаю об этом даже? или я не говорил?ты предложил другой вариант и сказал что этот не одобряешь. а
-    // во, всё. значит предупреждена и я могу сказать "я же гвоорил"
-    // но мой вариант безопасный. ложная лож. потом попробую поискать проблемы с этим вариантом.
     const keyUpHandler = e => {
         const rows = (e.target.scrollHeight - 20) / 18 // 18 is the height of a row, 20 - padding
         setNumberTextArea(rows)
@@ -45,7 +49,7 @@ const TextArea = ({ handleChange, value, name, isDisabled, rows }) => {
         <div className='textarea-wrapper '>
             <textarea
                 id='textarea-num'
-                rows={rows || 15}
+                rows={rows}
                 cols='3'
                 className='textarea textarea-numbers'
                 ref={numLine}
@@ -57,7 +61,7 @@ const TextArea = ({ handleChange, value, name, isDisabled, rows }) => {
                 spellCheck='false'
                 name={name}
                 id='textarea-code'
-                rows={rows || 15}
+                rows={rows}
                 className='textarea textarea-code'
                 ref={code}
                 value={value}

@@ -1,4 +1,4 @@
-import { CHANGE_FILTERS } from '../constants'
+import { UPDATE_FILTERS } from '../constants'
 
 const state = {
     filename: '',
@@ -8,12 +8,11 @@ const state = {
     description: ''
 }
 
-// where to put server request  ?
 export default (filterState = state, action) => {
     const { type, payload } = action
 
     switch (type) {
-        case CHANGE_FILTERS:
+        case UPDATE_FILTERS:
             return { ...filterState, ...payload }
         default:
             return filterState

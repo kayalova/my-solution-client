@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { makeGetRequest } from '../../helpers'
+import { getSnippets } from '../../server/serverApi'
 import { loadSnippets } from '../../action-creators'
 import SnippetPreview from '../SnippetPreview'
 import './SnippetPreviewList.sass'
@@ -12,7 +12,7 @@ const SnippetList = props => {
     const snippetFilters = useSelector(state => state.filter)
 
     useEffect(() => {
-        makeGetRequest(props.location.state?.createdSnippet || snippetFilters)
+        getSnippets(props.location.state?.createdSnippet || snippetFilters)
             .then(snippets => {
                 dispatch(loadSnippets(snippets))
             })
@@ -25,7 +25,15 @@ const SnippetList = props => {
         </article>
     ))
 
-    return <section className='section'>{snippetList}</section>
+    const noSnippets = (
+        <p className='no-snippets-text'>Sorry, no snippets found</p>
+    )
+
+    return (
+        <section className='section'>
+            {snippetList.length ? snippetList : noSnippets}
+        </section>
+    )
 }
 
 export default SnippetList

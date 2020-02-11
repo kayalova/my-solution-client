@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
 import Button from '../Button'
@@ -8,8 +8,7 @@ import InputSelect from '../Select'
 import DateRangePicker from '../DateRangePicker'
 import { BTN_FILTER_STYLES } from '../../constants/styles'
 import { updateFilters, loadSnippets } from '../../action-creators'
-import { getSnippets } from '../../server/Repository'
-import { makeGetRequest, makeCatsGetRequest } from '../../helpers'
+import { getSnippets, getCategories } from '../../server/serverApi'
 import './Aside.sass'
 
 const useStyles = makeStyles(theme => ({
@@ -30,10 +29,16 @@ const Aside = () => {
     const dispatch = useDispatch()
     const [categories, setCategories] = useState([])
     const formFilterValues = useSelector(state => state.filter)
-    const { filename, category, description } = formFilterValues
+    const {
+        filename,
+        category,
+        description,
+        endDate,
+        startDate
+    } = formFilterValues
 
     useEffect(() => {
-        makeCatsGetRequest()
+        getCategories()
             .then(cats => setCategories(cats))
             .catch(err => console.log(err))
     }, [])
@@ -49,7 +54,13 @@ const Aside = () => {
     const handleSubmit = useCallback(
         e => {
             e.preventDefault()
-            getSnippets({ category, description, userFilename: filename })
+            getSnippets({
+                category,
+                description,
+                userFilename: filename,
+                endDate,
+                startDate
+            })
                 .then(snippets => dispatch(loadSnippets(snippets)))
                 .catch(err => console.log(err))
         },
@@ -63,7 +74,6 @@ const Aside = () => {
             <h3 className='aside__title'>Filter by</h3>
             <form className='form' onSubmit={handleSubmit}>
                 <Input
-                    type='text'
                     name='filename'
                     label='[filename].[ext]'
                     handleChange={handleInputsChange}
@@ -95,7 +105,6 @@ const Aside = () => {
                     style={BTN_FILTER_STYLES}
                     size='medium'
                 />
-                {/* <button className='btn btn-filter'>Filter</button> */}
             </form>
         </aside>
     )
