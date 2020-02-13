@@ -8,7 +8,6 @@ const useStyles = makeStyles(theme => ({
         marginTop: props => props?.style?.marginTop || 20,
         alignSelf: props => props?.style?.alignSelf,
         padding: props => props?.style?.padding,
-        zIndex: props => props?.style?.zIndex,
         position: props => props?.style?.position || 'static',
         top: props => props?.style?.top,
         left: props => props?.style?.left,

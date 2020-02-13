@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getSnippets } from '../../server/serverApi'
-import { loadSnippets } from '../../action-creators'
+import { loadSnippets, updateFilters } from '../../action-creators'
 import SnippetPreview from '../SnippetPreview'
 import './SnippetPreviewList.sass'
 
@@ -15,6 +15,7 @@ const SnippetList = props => {
         getSnippets(props.location.state?.createdSnippet || snippetFilters)
             .then(snippets => {
                 dispatch(loadSnippets(snippets))
+                dispatch(updateFilters({ endDate: new Date().getTime() }))
             })
             .catch(err => console.log(err))
     }, [])
