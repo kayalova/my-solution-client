@@ -6,18 +6,20 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
     btn: {
         maxWidth: props => props?.style?.maxWidth || 100,
-        marginTop: props => props?.style?.marginTop || 20,
+        marginTop: props => props?.style?.marginTop || 0,
         alignSelf: props => props?.style?.alignSelf,
         padding: props => props?.style?.padding,
         position: props => props?.style?.position || 'static',
         top: props => props?.style?.top,
         left: props => props?.style?.left,
         color: props => props?.style?.color || '#fff',
-        backgroundColor: props => props?.style?.bgColor || 'blue',
+        backgroundColor: props =>
+            props?.style?.bgColor || 'rgba(0, 0, 246, 0.7)',
         borderRadius: props => props?.style?.brad || 4,
         '&:hover': {
             color: props => props?.style?.hover?.color,
-            backgroundColor: props => props?.style?.hover?.bgColor
+            backgroundColor: props =>
+                props?.style?.hover?.bgColor || 'rgba(0, 0, 246, 0.85)'
         },
         transition: props => props?.style?.transition || '.5s',
         fontFamily: props => props?.style?.fontFamily,

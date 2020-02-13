@@ -1,4 +1,9 @@
-import { UPDATE_FILTERS, GET_SNIPPET_LIST, DELETE_SNIPPET } from '../constants'
+import {
+    UPDATE_FILTERS,
+    GET_SNIPPET_LIST,
+    DELETE_SNIPPET,
+    SET_ERROR
+} from '../constants'
 
 export const updateFilters = formField => {
     return {
@@ -18,5 +23,15 @@ export const removeSnippet = snippetID => {
     return {
         type: DELETE_SNIPPET,
         payload: snippetID
+    }
+}
+
+export const setError = (msg, hasError = true) => {
+    return {
+        type: SET_ERROR,
+        payload: {
+            hasError,
+            errMessage: msg
+        }
     }
 }

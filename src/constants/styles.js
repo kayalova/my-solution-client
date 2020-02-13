@@ -3,6 +3,7 @@ export const BTN_CREATE_STYLES = {
     bgColor: '#dff11f',
     padding: '2px 15px',
     alignSelf: 'flex-end',
+    marginTop: '20px',
     transition: '.5s',
     hover: {
         bgColor: '#E8FA21'
@@ -28,7 +29,6 @@ export const BTN_FILTER_STYLES = {
     fontSize: '18px',
     padding: '2px 20px',
     transition: '.5s',
-    marginTop: '0',
     alignSelf: 'center',
     hover: {
         color: '#43679D',

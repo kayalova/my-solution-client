@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import AceEditor from 'react-ace'
 import 'ace-builds/src-noconflict/mode-javascript'
@@ -8,12 +9,14 @@ import InputText from '../Input'
 import InputSelect from '../Select'
 import Button from '../Button'
 import { getEmptyFields } from '../../helpers'
+import { setError } from '../../action-creators'
 import { BTN_CREATE_STYLES, DESCRIPTION_STYLES } from '../../constants/styles'
 import { createSnippet, getCategories } from '../../server/serverApi'
 import './CreateSnippet.sass'
 
 const CreateSnippet = () => {
     const history = useHistory()
+    const dispatch = useDispatch()
     const [isBtnDisabled, setBtnDisabled] = useState(true)
     const [categories, setCategories] = useState([])
     const [snippetFields, setSnippetFields] = useState({
@@ -54,16 +57,20 @@ const CreateSnippet = () => {
         e.preventDefault()
         const data = { userFilename: filename, description, category, code }
         createSnippet(data)
-            .then(() => {
-                history.push('/snippets', {
-                    createdSnippet: {
-                        userFilename: filename,
-                        description,
-                        category
-                    }
-                })
+            .then(response => {
+                if (response.message !== 'Snippet successfully created')
+                    dispatch(setError(response.message))
+                else {
+                    history.push('/snippets', {
+                        createdSnippet: {
+                            userFilename: filename,
+                            description,
+                            category
+                        }
+                    })
+                }
             })
-            .catch(err => console.log(err))
+            .catch(err => dispatch(setError(err)))
     }
 
     return (

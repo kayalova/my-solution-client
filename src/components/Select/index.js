@@ -32,7 +32,6 @@ const InputSelect = props => {
     }))
 
     const classes = useStyles()
-
     const options = items.map(({ title, _id }) => (
         <MenuItem className={classes.item} value={_id} key={_id}>
             {title}

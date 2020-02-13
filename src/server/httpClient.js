@@ -1,12 +1,13 @@
 const get = (url, params = '') => {
-    if (typeof params === 'object') {
+    if (typeof params === 'object')
         Object.keys(params).forEach(p => url.searchParams.append(p, params[p]))
-    } else {
-        url += `/${params}`
-    }
+    else url += `/${params}`
 
     return fetch(url)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) throw Error(response.statusText)
+            return response.json()
+        })
         .then(result => result)
         .catch(err => err)
 }
@@ -20,7 +21,10 @@ const post = (url, body) => {
         method: 'POST',
         body: JSON.stringify(body)
     })
-        .then(resp => resp.json())
+        .then(response => {
+            if (!response.ok) throw Error(response.statusText)
+            return response.json()
+        })
         .then(result => result)
         .catch(err => err)
 }
@@ -29,7 +33,10 @@ const deleteOne = (url, params) => {
     return fetch(`${url}/${params}`, {
         method: 'DELETE'
     })
-        .then(resp => resp.json())
+        .then(response => {
+            if (!response.ok) throw Error(response.statusText)
+            return response.json()
+        })
         .then(result => result)
         .catch(err => err)
 }

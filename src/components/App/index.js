@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom'
 
 import AddIcon from '@material-ui/icons/Add'
+import ErrorBoundary from '../ErrorBoundary'
 import Header from '../Header'
 import Aside from '../Aside/'
 import SnippetList from '../SnippetPreviewList'
@@ -18,29 +19,34 @@ const App = () => {
                 <Header />
                 <div className='wrapper'>
                     <main className='main'>
-                        <Switch>
-                            <Route exact path='/'>
-                                <Redirect to='/snippets' />
-                            </Route>
-                            <Route
-                                exact
-                                path='/snippets'
-                                render={props => (
-                                    <SearchContainer>
-                                        <Aside {...props} />
-                                        <SnippetList {...props} />
-                                        <Link to={'/create'}>
-                                            <FabButton icon={<AddIcon />} />
-                                        </Link>
-                                    </SearchContainer>
-                                )}
-                            />
-                            <Route path='/create' component={CreateSnippet} />
-                            <Route
-                                path='/snippets/:id'
-                                component={FullSnippet}
-                            />
-                        </Switch>
+                        <ErrorBoundary>
+                            <Switch>
+                                <Route exact path='/'>
+                                    <Redirect to='/snippets' />
+                                </Route>
+                                <Route
+                                    exact
+                                    path='/snippets'
+                                    render={props => (
+                                        <SearchContainer>
+                                            <Aside {...props} />
+                                            <SnippetList {...props} />
+                                            <Link to={'/create'}>
+                                                <FabButton icon={<AddIcon />} />
+                                            </Link>
+                                        </SearchContainer>
+                                    )}
+                                />
+                                <Route
+                                    path='/create'
+                                    component={CreateSnippet}
+                                />
+                                <Route
+                                    path='/snippets/:id'
+                                    component={FullSnippet}
+                                />
+                            </Switch>
+                        </ErrorBoundary>
                     </main>
                 </div>
             </div>

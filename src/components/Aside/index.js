@@ -7,7 +7,7 @@ import Input from '../Input'
 import InputSelect from '../Select'
 import DateRangePicker from '../DateRangePicker'
 import { BTN_FILTER_STYLES } from '../../constants/styles'
-import { updateFilters, loadSnippets } from '../../action-creators'
+import { updateFilters, loadSnippets, setError } from '../../action-creators'
 import { getSnippets, getCategories } from '../../server/serverApi'
 import './Aside.sass'
 
@@ -39,8 +39,13 @@ const Aside = () => {
 
     useEffect(() => {
         getCategories()
-            .then(cats => setCategories(cats))
-            .catch(err => console.log(err))
+            .then(response => {
+                if (!response.message) setCategories(response)
+                else dispatch(setError(response.message))
+            })
+            .catch(err => {
+                dispatch(setError(err))
+            })
     }, [])
 
     const handleInputsChange = useCallback(
@@ -62,7 +67,7 @@ const Aside = () => {
                 startDate
             })
                 .then(snippets => dispatch(loadSnippets(snippets)))
-                .catch(err => console.log(err))
+                .catch(err => dispatch(setError()))
         },
         [formFilterValues]
     )

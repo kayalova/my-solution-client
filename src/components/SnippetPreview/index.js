@@ -8,7 +8,7 @@ import Button from '../Button'
 import { getFullDate } from '../../helpers'
 import { getSnippet, deleteSnippet } from '../../server/serverApi'
 import { BTN_DELETE_STYLES } from '../../constants/styles'
-import { removeSnippet } from '../../action-creators'
+import { removeSnippet, setError } from '../../action-creators'
 import './SnippetPreview.sass'
 
 const SnippetPreview = ({ snippet }) => {
@@ -29,14 +29,23 @@ const SnippetPreview = ({ snippet }) => {
     const submitHandler = e => {
         e.preventDefault()
         deleteSnippet(_id)
-            .then(() => dispatch(removeSnippet(_id)))
-            .catch(err => console.log(err))
+            .then(response => {
+                if (response.message !== 'Snippet successfully deleted')
+                    dispatch(setError(response.message))
+                else dispatch(removeSnippet(_id))
+            })
+            .catch(err => dispatch(setError(err)))
     }
 
-    const clickHandler = async e => {
+    const clickHandler = e => {
         e.preventDefault()
-        const response = await getSnippet(_id)
-        history.push(`/snippets/${_id}`, response)
+        getSnippet(_id)
+            .then(response => {
+                if (!response.message)
+                    history.push(`/snippets/${_id}`, response)
+                else dispatch(setError(response.message))
+            })
+            .catch(err => dispatch(setError(err)))
     }
 
     return (

@@ -1,3 +1,4 @@
 export const UPDATE_FILTERS = 'UPDATE_FILTERS'
 export const GET_SNIPPET_LIST = 'GET_SNIPPET_LIST'
 export const DELETE_SNIPPET = 'DELETE_SNIPPET'
+export const SET_ERROR = 'SET_ERROR'
