@@ -1,16 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
+import AceEditor from 'react-ace'
+import 'ace-builds/src-noconflict/mode-javascript'
+import 'ace-builds/src-noconflict/theme-tomorrow'
 
-import { getFullDate } from '../../helpers'
+import { getFullDate, getEntryCount } from '../../helpers'
 import FabButton from '../FAB'
-import Textarea from '../TextArea'
 import './FullSnippet.sass'
 
 const FullSnippet = props => {
     const { snippet, code } = props.location.state
     const { userFilename: filename, description, category, createdAt } = snippet
+
     const date = getFullDate(createdAt)
+    const rows = getEntryCount(code, /\n/g) + 1
 
     return (
         <section className='section section-fullSnippet'>
@@ -18,7 +22,19 @@ const FullSnippet = props => {
             <span className='snippet-text'>{description}</span>
             <span className='snippet-text'>{category.title}</span>
             <span className='snippet-text'>{date}</span>
-            <Textarea value={code} isDisabled={true} />
+
+            <div className='ace-wrapper'>
+                <AceEditor
+                    mode='javascript'
+                    theme='tomorrow'
+                    value={code}
+                    showPrintMargin={false}
+                    width={'100%'}
+                    height={`${rows * 14}px`}
+                    readOnly
+                />
+            </div>
+
             <Link to='/snippets'>
                 <FabButton icon={<KeyboardBackspaceIcon />} />
             </Link>

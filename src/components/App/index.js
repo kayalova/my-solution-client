@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom'
 
 import AddIcon from '@material-ui/icons/Add'
 import Header from '../Header'
@@ -19,6 +19,9 @@ const App = () => {
                 <div className='wrapper'>
                     <main className='main'>
                         <Switch>
+                            <Route exact path='/'>
+                                <Redirect to='/snippets' />
+                            </Route>
                             <Route
                                 exact
                                 path='/snippets'

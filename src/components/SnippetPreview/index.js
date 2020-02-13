@@ -14,6 +14,7 @@ const SnippetPreview = ({ snippet }) => {
     const {
         _id,
         userFilename: filename,
+        description,
         category,
         createdAt,
         codePreview
@@ -47,10 +48,11 @@ const SnippetPreview = ({ snippet }) => {
             <div className='snippet__info'>
                 <div className='info-wrapper'>
                     <p className='snippet__text'>{filename}</p>
+                    <p className='snippet__text'>{description}</p>
                     <p className='snippet__text'>{category.title}</p>
                     <p className='snippet__text'>{date}</p>
                 </div>
-                <form onSubmit={submitHandler}>
+                <form onSubmit={submitHandler} style={{ display: 'flex' }}>
                     <Button
                         style={BTN_DELETE_STYLES}
                         type='submit'

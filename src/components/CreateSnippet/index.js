@@ -1,9 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import AceEditor from 'react-ace'
+import 'ace-builds/src-noconflict/mode-javascript'
+import 'ace-builds/src-noconflict/theme-tomorrow'
 
 import InputText from '../Input'
 import InputSelect from '../Select'
-import TextArea from '../TextArea'
 import Button from '../Button'
 import { getEmptyFields } from '../../helpers'
 import { BTN_CREATE_STYLES, DESCRIPTION_STYLES } from '../../constants/styles'
@@ -31,7 +33,10 @@ const CreateSnippet = () => {
 
     const handleChange = useCallback(
         e => {
-            const target = { [e.target.name]: e.target.value }
+            const target =
+                typeof e === 'object'
+                    ? { [e.target.name]: e.target.value }
+                    : { code: e }
             setSnippetFields({
                 ...snippetFields,
                 ...target
@@ -89,10 +94,13 @@ const CreateSnippet = () => {
                     handleChange={handleChange}
                     value={category}
                 />
-                <TextArea
-                    handleChange={handleChange}
+                <AceEditor
+                    mode='javascript'
+                    theme='tomorrow'
+                    onChange={handleChange}
                     value={code}
-                    name={'code'}
+                    showPrintMargin={false}
+                    width={'100%'}
                 />
                 <Button
                     type='submit'

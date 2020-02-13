@@ -51,21 +51,18 @@ const Aside = () => {
         [filename, category, description, dispatch]
     )
 
-    const handleSubmit = useCallback(
-        e => {
-            e.preventDefault()
-            getSnippets({
-                category,
-                description,
-                userFilename: filename,
-                endDate,
-                startDate
-            })
-                .then(snippets => dispatch(loadSnippets(snippets)))
-                .catch(err => console.log(err))
-        },
-        [formFilterValues]
-    )
+    const handleSubmit = e => {
+        e.preventDefault()
+        getSnippets({
+            category,
+            description,
+            userFilename: filename,
+            endDate,
+            startDate
+        })
+            .then(snippets => dispatch(loadSnippets(snippets)))
+            .catch(err => console.log(err))
+    }
 
     const classes = useStyles()
 
