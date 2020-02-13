@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
@@ -71,6 +72,10 @@ const DateRangePicker = ({ classes }) => {
     ))
 
     return <React.Fragment>{datePickers}</React.Fragment>
+}
+
+DateRangePicker.propTyped = {
+    classes: PropTypes.object
 }
 
 export default DateRangePicker

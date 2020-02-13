@@ -100,10 +100,11 @@ const Aside = () => {
                 <DateRangePicker classes={classes} />
 
                 <Button
-                    type='submit'
+                    variant='contained'
                     text={'Filter'}
-                    style={BTN_FILTER_STYLES}
+                    type='submit'
                     size='medium'
+                    style={BTN_FILTER_STYLES}
                 />
             </form>
         </aside>

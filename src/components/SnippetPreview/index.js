@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import SnippetTable from './SnippetTable'
 import Button from '../Button'
@@ -65,6 +66,17 @@ const SnippetPreview = ({ snippet }) => {
             </div>
         </section>
     )
+}
+
+SnippetPreview.propTypes = {
+    snippet: PropTypes.shape({
+        _id: PropTypes.string,
+        filename: PropTypes.string,
+        description: PropTypes.string,
+        category: PropTypes.object,
+        createdAt: PropTypes.number,
+        codePreview: PropTypes.string
+    })
 }
 
 export default SnippetPreview

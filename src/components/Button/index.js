@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -31,8 +32,8 @@ const useStyles = makeStyles(theme => ({
 
 const MyButton = props => {
     const classes = useStyles(props)
-
     const { text, id, variant, size, type, isDisabled, handleClick } = props
+
     return (
         <Button
             type={type}
@@ -47,6 +48,16 @@ const MyButton = props => {
             {text}
         </Button>
     )
+}
+
+MyButton.propTypes = {
+    type: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    variant: PropTypes.string.isRequired,
+    handleClick: PropTypes.func,
+    disabled: PropTypes.bool,
+    size: PropTypes.string,
+    id: PropTypes.string
 }
 
 export default MyButton

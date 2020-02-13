@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
@@ -52,6 +53,16 @@ const InputSelect = props => {
             </Select>
         </FormControl>
     )
+}
+
+InputSelect.propTypes = {
+    items: PropTypes.array.isRequired,
+    inputLabel: PropTypes.string.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    selectId: PropTypes.string,
+    labelId: PropTypes.string
 }
 
 export default InputSelect

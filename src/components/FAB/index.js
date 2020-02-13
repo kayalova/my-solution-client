@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import withWidth from '@material-ui/core/withWidth'
 import Fab from '@material-ui/core/Fab'
@@ -27,6 +28,10 @@ const FabButton = ({ width, icon }) => {
             {icon}
         </Fab>
     )
+}
+
+FabButton.propTypes = {
+    icon: PropTypes.element.isRequired
 }
 
 export default withWidth()(FabButton)

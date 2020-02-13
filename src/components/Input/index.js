@@ -1,8 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 
 import './Input.sass'
+
 const useStyles = makeStyles(theme => ({
     root: {
         marginBottom: 20,
@@ -62,6 +64,14 @@ const InputText = props => {
             value={value}
         />
     )
+}
+
+InputText.propTypes = {
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    variant: PropTypes.string
 }
 
 export default InputText
