@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import 'date-fns'
@@ -8,30 +8,37 @@ import {
     KeyboardDatePicker
 } from '@material-ui/pickers'
 
+import { getFilters } from '../../selectors/filters'
 import { updateFilters } from '../../action-creators'
 import './DateRangePicker.sass'
 
 const DateRangePicker = ({ classes }) => {
-    const dateValues = useSelector(state => state.filter)
+    const dateValues = useSelector(getFilters)
     const dispatch = useDispatch()
 
     const { startDate, endDate } = dateValues
 
-    let start = {
-        value: startDate,
-        name: 'startDate',
-        label: 'Start date',
-        id: 'date-picker-start'
-    }
+    let start = useMemo(
+        () => ({
+            value: startDate,
+            name: 'startDate',
+            label: 'Start date',
+            id: 'date-picker-start'
+        }),
+        [startDate]
+    )
 
-    let end = {
-        value: endDate,
-        name: 'endDate',
-        label: 'End date',
-        id: 'date-picker-end',
-        minDate: startDate,
-        minDateMessage: 'End date can not be before start date'
-    }
+    let end = useMemo(
+        () => ({
+            value: endDate,
+            name: 'endDate',
+            label: 'End date',
+            id: 'date-picker-end',
+            minDate: startDate,
+            minDateMessage: 'End date can not be before start date'
+        }),
+        [endDate, startDate]
+    )
 
     const handleStartChange = useCallback(
         date => {

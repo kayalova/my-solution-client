@@ -6,6 +6,20 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import { makeStyles } from '@material-ui/core/styles'
 
+const useStyles = makeStyles(theme => ({
+    formControl: {
+        backgroundColor: '#fbfbfb',
+        borderRadius: 4,
+        border: '1px solid #fff',
+        transition: '.4s',
+        marginBottom: 20,
+        maxWidth: 200
+    },
+    item: {
+        color: '#1890ff'
+    }
+}))
+
 const InputSelect = props => {
     const {
         handleChange,
@@ -16,20 +30,6 @@ const InputSelect = props => {
         labelId,
         selectId
     } = props
-
-    const useStyles = makeStyles(theme => ({
-        formControl: {
-            backgroundColor: '#fbfbfb',
-            borderRadius: 4,
-            border: '1px solid #fff',
-            transition: '.4s',
-            marginBottom: 20,
-            maxWidth: 200
-        },
-        item: {
-            color: '#1890ff'
-        }
-    }))
 
     const classes = useStyles()
     const options = items.map(({ title, _id }) => (

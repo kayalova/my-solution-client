@@ -1,31 +1,7 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { getSnippets } from '../../server/serverApi'
-import { loadSnippets, updateFilters, setError } from '../../action-creators'
-import SnippetPreview from '../SnippetPreview'
+import React from 'react'
 import './SnippetPreviewList.sass'
 
-const SnippetList = props => {
-    const dispatch = useDispatch()
-    const snippets = useSelector(state => state.snippets)
-    const snippetFilters = useSelector(state => state.filter)
-
-    useEffect(() => {
-        getSnippets(props.location.state?.createdSnippet || snippetFilters)
-            .then(response => {
-                dispatch(loadSnippets(response))
-                dispatch(updateFilters({ endDate: new Date().getTime() }))
-            })
-            .catch(err => dispatch(setError(err)))
-    }, [])
-
-    const snippetList = snippets.map(snippet => (
-        <article className='article' key={snippet._id}>
-            <SnippetPreview snippet={snippet} />
-        </article>
-    ))
-
+const SnippetList = ({ snippetList }) => {
     const noSnippets = (
         <p className='no-snippets-text'>Sorry, no snippets found</p>
     )

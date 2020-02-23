@@ -1,15 +1,11 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 
-import AddIcon from '@material-ui/icons/Add'
 import ErrorBoundary from '../ErrorBoundary'
 import Header from '../Header'
-import Aside from '../Aside/'
-import SnippetList from '../SnippetPreviewList'
-import SearchContainer from '../SearchContainer'
-import FabButton from '../FAB'
-import CreateSnippet from '../CreateSnippet'
-import FullSnippet from '../FullSnippet'
+import SearchSnippets from '../../pages/SearchSnippets'
+import CreateSnippet from '../../pages/CreateSnippet'
+import FullSnippet from '../../pages/FullSnippet'
 import './App.sass'
 
 const App = () => {
@@ -27,15 +23,7 @@ const App = () => {
                                 <Route
                                     exact
                                     path='/snippets'
-                                    render={props => (
-                                        <SearchContainer>
-                                            <Aside {...props} />
-                                            <SnippetList {...props} />
-                                            <Link to={'/create'}>
-                                                <FabButton icon={<AddIcon />} />
-                                            </Link>
-                                        </SearchContainer>
-                                    )}
+                                    component={SearchSnippets}
                                 />
                                 <Route
                                     path='/create'

@@ -28,9 +28,9 @@ const useStyles = makeStyles({
     }
 })
 
-const SnippetTable = ({ codePreview }) => {
+const MyTable = ({ text }) => {
     const classes = useStyles()
-    const rows = codePreview.split('\n')
+    const rows = text.split('\n')
     return (
         <TableContainer>
             <Table className={classes.table} aria-label='customized table'>
@@ -54,8 +54,8 @@ const SnippetTable = ({ codePreview }) => {
     )
 }
 
-SnippetTable.propTypes = {
-    codePreview: PropTypes.string.isRequired
+MyTable.propTypes = {
+    text: PropTypes.string.isRequired
 }
 
-export default SnippetTable
+export default MyTable
